@@ -2,6 +2,7 @@
 
 import { execSync } from 'child_process';
 import * as readline from 'readline';
+import { runGovernanceFlow, GovernanceFlowOptions } from '../helpers/governanceFlow';
 
 interface GovernanceConfigOptions {
   network: string;
@@ -96,59 +97,19 @@ class GovernanceConfigProposer {
     throw new Error('Could not extract proposal ID from output');
   }
 
-  private async checkProposalStatus(proposalId: string): Promise<void> {
-    const command = `yarn hardhat governor:status --network ${this.options.network} --deployment ${this.options.deployment} --proposal-id ${proposalId}`;
-    
-    await this.runCommandWithOutput(command, 'Checking proposal status');
-  }
-
-  private async approveProposal(proposalId: string): Promise<void> {
-    const command = `yarn hardhat governor:approve --network ${this.options.network} --deployment ${this.options.deployment} --proposal-id ${proposalId}`;
-    
-    await this.runCommandWithOutput(command, 'Approving proposal');
-  }
-
-  private async queueProposal(proposalId: string): Promise<void> {
-    const command = `yarn hardhat governor:queue --network ${this.options.network} --deployment ${this.options.deployment} --proposal-id ${proposalId}`;
-    
-    await this.runCommandWithOutput(command, 'Queueing proposal');
-  }
-
-  private async executeProposal(proposalId: string): Promise<void> {
-    const command = `yarn hardhat governor:execute --network ${this.options.network} --deployment ${this.options.deployment} --proposal-id ${proposalId} --execution-type governance-config`;
-    
-    await this.runCommandWithOutput(command, 'Executing proposal');
-  }
-
   private async runGovernanceFlow(proposalId: string): Promise<void> {
     this.log(`\n🎉 Governance configuration proposal created successfully!`, 'success');
-    this.log(`\n🚀 Starting governance flow for proposal ID: ${proposalId}`, 'info');
     
-    // Check proposal status
-    await this.checkProposalStatus(proposalId);
+    const options: GovernanceFlowOptions = {
+      network: this.options.network,
+      deployment: this.options.deployment,
+      proposalId: proposalId,
+      executionType: 'governance-config'
+    };
     
-    // Ask user if they want to proceed with governance
-    const shouldProcessGovernance = await this.confirm(`\nDo you want to approve, queue, and execute proposal ${proposalId}?`);
+    const successMessage = `\n🎉 Governance configuration change completed successfully!\n🔧 New governance configuration is now active`;
     
-    if (shouldProcessGovernance) {
-      // Approve proposal
-      await this.approveProposal(proposalId);
-      
-      // Queue proposal
-      await this.queueProposal(proposalId);
-      
-      // Execute proposal
-      await this.executeProposal(proposalId);
-      
-      this.log(`\n🎉 Governance configuration change completed successfully!`, 'success');
-      this.log(`\n🔧 New governance configuration is now active`, 'info');
-    } else {
-      this.log(`\n⏸️  Governance flow paused. You can manually process the proposal later.`, 'warning');
-      this.log(`\n📋 Commands to run manually:`, 'info');
-      this.log(`   yarn hardhat governor:approve --network ${this.options.network} --deployment ${this.options.deployment} --proposal-id ${proposalId}`, 'info');
-      this.log(`   yarn hardhat governor:queue --network ${this.options.network} --deployment ${this.options.deployment} --proposal-id ${proposalId}`, 'info');
-      this.log(`   yarn hardhat governor:execute --network ${this.options.network} --deployment ${this.options.deployment} --proposal-id ${proposalId} --execution-type governance-config`, 'info');
-    }
+    await runGovernanceFlow(options, successMessage);
   }
 
   public async run(): Promise<void> {
