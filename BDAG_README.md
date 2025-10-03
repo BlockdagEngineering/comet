@@ -1,4 +1,29 @@
-# BlockDAG Primordial - Local Development Guide
+# BlockDAG Development Documentation
+
+**📚 This documentation has been reorganized for better user experience.**
+
+For comprehensive BlockDAG development guides, please visit our **[updated documentation section](./docs/bdag/README.md)**.
+
+## Quick Reference
+
+### Immediate Help
+- **🚀 Getting Started**: [Quick Start Guide](./docs/bdag/quick-start.md)
+- **⚙️ Setup Issues**: [Troubleshooting](./docs/bdag/troubleshooting.md)
+- **🏛️ Governance**: [BDAG Governance System](./docs/bdag/governance-system.md)
+
+### Documentation Sections
+- **[Environment Configuration](./docs/bdag/environment-configuration.md)** - API keys and environment setup
+- **[Network Configuration](./docs/bdag/network-configuration.md)** - Network settings and deployment structure  
+- **[Deployment Process](./docs/bdag/deployment-process.md)** - Complete deployment walkthrough
+- **[Testing Guide](./docs/bdag/testing-guide.md)** - Comprehensive testing procedures
+- **[Local Development](./docs/bdag/local-development.md)** - Local development environment setup
+- **[Market Configuration](./docs/bdag/market-configuration.md)** - Lending market configuration
+- **[Important Limitations](./docs/bdag/comet-limitations.md)** - Critical Comet reconfiguration restrictions
+
+---
+
+**⚠️ Legacy Content Below**
+*The content below is kept for historical reference but has been superseded by the organized documentation above.*
 
 ## Quick Start
 

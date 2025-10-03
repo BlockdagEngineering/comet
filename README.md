@@ -1,5 +1,8 @@
 # Compound Comet
 
+> **🚀 BlockDAG Fork Notice**  
+> This is a specialized fork of Compound Comet designed for the BlockDAG network. For BlockDAG-specific features, deployment guides, and network configurations, please refer to our **[BlockDAG Documentation](./docs/bdag/README.md)**.
+
 ## Getting started
 
 1. Clone the repo
